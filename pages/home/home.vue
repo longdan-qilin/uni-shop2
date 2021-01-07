@@ -1,5 +1,10 @@
 <template>
+
   <view>
+    <!-- 搜索框 -->
+    <view class="search-box">
+      <my-search :bgcolor="'pink'" @my-click='getHerf'></my-search>
+    </view>
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <!-- 循环遍历每个item项 -->
@@ -109,12 +114,27 @@
         })
         // 请求成功 让定义好的 获取楼层数组的列表 接收
         this.floorList = res.message
+      },
+      // 点击输入框
+      getHerf() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
+        })
       }
     }
   }
 </script>
 
 <style lang="scss">
+  // 搜索框
+  .search-box {
+    // 吸顶效果
+    position: sticky;
+    // 顶部 吸顶的位置
+    top: 0;
+    // 防止被轮番图覆盖
+    z-index: 999;
+  }
   // 轮播图区域
   swiper {
     height: 330rpx;

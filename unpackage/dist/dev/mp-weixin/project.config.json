@@ -58,6 +58,12 @@
         {
           "name": "pages/cate/cate",
           "pathName": "pages/cate/cate",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "subpkg/search/search",
+          "pathName": "subpkg/search/search",
           "scene": null
         }
       ]

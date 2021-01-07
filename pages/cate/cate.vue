@@ -1,5 +1,6 @@
 <template>
   <view>
+    <my-search :bgcolor="'pink'" @my-click='getHerf'></my-search>
     <view class="scroll-view-container">
       <!-- 左侧的滚动视图区域 -->
       <scroll-view class="left-scroll-view" scroll-y :style="{height: wh + 'px'}">
@@ -50,7 +51,8 @@
       const sysInfo = uni.getSystemInfoSync()
       console.log(sysInfo)
       // 为 wh 窗口可用高度动态赋值
-      this.wh = sysInfo.windowHeight
+       // 可用高度 = 屏幕高度 - navigationBar高度 - tabBar高度 - 自定义的search组件高度
+      this.wh = sysInfo.windowHeight - 50
       // 调用获取分类列表的数据的方法
       this.getCateList()
     },
@@ -75,10 +77,16 @@
          // 让 scrollTop 的值在 0 与 1 之间切换
         this.scrollTop = this.scrollTop === 0 ? 1 : 0
       },
-      // 点击跳转到商品详情页面
+      // 点击三级分类项跳转到商品列表页面
       gotoCate(item3) {
         uni.navigateTo({
           url: '/subpkg/good_list/good_list?cid=' + item3.cat_id 
+        })
+      },
+      // 点击输入框
+      getHerf() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
         })
       }
     }
