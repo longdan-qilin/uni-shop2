@@ -25,6 +25,14 @@ _requestMiniprogram.$http.beforeRequest = function (option) {
 _requestMiniprogram.$http.afterRequest = function (option) {
   uni.hideLoading();
 };
+// 封装展示提示消息的方法
+uni.$showMsg = function () {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '加载中...';var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+  uni.showToast({
+    title: title,
+    duration: duration,
+    icon: 'none' });
+
+};
 _vue.default.config.productionTip = false;
 
 _App.default.mpType = 'app';

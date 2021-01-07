@@ -31,16 +31,13 @@
         "enablePullDownRefresh": false
       }
 
-    }    ,{
-                    "path" : "good_list/good_list",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+    }, {
+      "path": "good_list/good_list",
+      "style": {
+        "enablePullDownRefresh": false
+      }
+
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",

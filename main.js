@@ -16,6 +16,14 @@ $http.beforeRequest = function(option) {
 $http.afterRequest = function(option) {
   uni.hideLoading()
 }
+// 封装展示提示消息的方法
+uni.$showMsg = function(title ='加载中...',duration = 1500) {
+ uni.showToast({
+   title,
+   duration,
+   icon: 'none'
+ })
+}
 Vue.config.productionTip = false
 
 App.mpType = 'app'
