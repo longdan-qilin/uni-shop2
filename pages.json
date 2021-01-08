@@ -34,19 +34,18 @@
     }, {
       "path": "good_list/good_list",
       "style": {
+        "enablePullDownRefresh": true,
+         "onReachBottomDistance": 150,
+         "backgroundColor":"#F8F8F8"
+      }
+
+    }, {
+      "path": "search/search",
+      "style": {
         "enablePullDownRefresh": false
       }
 
-    }    ,{
-                    "path" : "search/search",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+    }]
   }],
   "globalStyle": {
     "navigationBarTextStyle": "white",
