@@ -56,9 +56,14 @@
 				this.inputValue = +val;
 			},
 			inputValue(newVal, oldVal) {
-				if (+newVal !== +oldVal) {
-					this.$emit("change", newVal);
-				}
+				// if (+newVal !== +oldVal) {
+				// 	this.$emit("change", newVal);
+				// }
+        //  加2个条件 必须同时满足 && 新的值必须是 数字型 而且 不是小数
+        //  + newVal 隐式转换 number  includes(".")包括这个直接不要  输入的不能超过最大值 不能小于设置的最小值
+        if (+newVal !== +oldVal && +newVal && !String(newVal).includes(".") && +newVal >= this.min && +newVal <= this.max) {
+        	this.$emit("change", newVal);
+        }
 			}
 		},
 		created() {
@@ -101,9 +106,12 @@
 				return scale;
 			},
 			_onBlur(event) {
-				let value = event.detail.value;
+				// let value = event.detail.value;
+        // 变成整数型数据
+         let value = parseInt(event.detail.value)
 				if (!value) {
-					// this.inputValue = 0;
+           // 如果转化之后的结果为 NaN，则给定默认值为 1
+					this.inputValue = 1;
 					return;
 				}
 				value = +value;

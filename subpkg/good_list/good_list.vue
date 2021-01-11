@@ -70,7 +70,7 @@
       // 如果是发起请求的状态的 就不在刷新执行下面的代码  2者都是防止发起额外的请求
       if(this.isloading) return
       // 切换到下一页 自增 +1
-      this.queryObj.pagenum ++
+      this.queryObj.pagenum += 1
       // 调用函数 跟新
       this.getGoodsList()
     },

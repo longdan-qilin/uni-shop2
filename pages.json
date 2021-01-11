@@ -35,8 +35,8 @@
       "path": "good_list/good_list",
       "style": {
         "enablePullDownRefresh": true,
-         "onReachBottomDistance": 150,
-         "backgroundColor":"#F8F8F8"
+        "onReachBottomDistance": 150,
+        "backgroundColor": "#F8F8F8"
       }
 
     }, {

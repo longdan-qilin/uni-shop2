@@ -56,9 +56,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "subpkg/goods_detail/goods_detail",
-          "pathName": "subpkg/goods_detail/goods_detail",
-          "query": "goods_id=395",
+          "name": "pages/cart/cart",
+          "pathName": "pages/cart/cart",
           "scene": null
         }
       ]
