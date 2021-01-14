@@ -9,11 +9,19 @@ uni.$http = $http
 // 配置请求根路径
 $http.baseUrl = 'https://www.uinav.com'
 // 请求拦截器
-$http.beforeRequest = function(option) {
+$http.beforeRequest = function(options) {
   uni.showLoading({
     title: '数据加载中...'
   })
-}
+  console.log(store)
+  // 判断用户是否有权限的API接口
+  if(options.url.indexOf('/my/') !== -1) {
+    // 如果有权限的 则将vuex里的token 给请求头的请求头字段
+    options.header = {
+      Authorization: store.state.m_user.token
+    }
+  }
+ }
 // 响应拦截器
 $http.afterRequest = function(option) {
   uni.hideLoading()

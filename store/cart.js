@@ -7,7 +7,7 @@ export default {
     // 购物车的数组，用来存储购物车中每个商品的信息对象
     // 每个商品的信息对象，都包含如下 6 个属性：
     // { goods_id, goods_name, goods_price, goods_count, goods_small_logo, goods_state }
-    cart: JSON.parse(uni.getStorageSync('cart') || '[]'),
+    cart: JSON.parse(uni.getStorageSync('cart') || '[]')
   }),
 
   // 模块的 mutations 方法
@@ -43,7 +43,7 @@ export default {
         this.commit('m_cart/saveToStorage')
       }
     },
-    // 更新本地的cart 的 商品数量
+    // 更新本地的cart的商品数量
     updateGoodsCount(state, goods) {
       // 查询商品的信息对象
       const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
@@ -89,7 +89,7 @@ export default {
       // reduce() 的返回值就是已勾选的商品的总数量
       return state.cart.filter(x => x.goods_state).reduce((total, item) => total += item.goods_count, 0)
     },
-    // 统计商品的总的价格 
+    // 统计选中商品的总的价格 
     checkedGoodsAmount(state) {
       return state.cart.filter(x => x.goods_state)
         .reduce((total, item) => total += item.goods_count * item.goods_price, 0)

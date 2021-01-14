@@ -18,10 +18,18 @@ uni.$http = _requestMiniprogram.$http;
 // 配置请求根路径
 _requestMiniprogram.$http.baseUrl = 'https://www.uinav.com';
 // 请求拦截器
-_requestMiniprogram.$http.beforeRequest = function (option) {
+_requestMiniprogram.$http.beforeRequest = function (options) {
   uni.showLoading({
     title: '数据加载中...' });
 
+  console.log(_store.default);
+  // 判断用户是否有权限的API接口
+  if (options.url.indexOf('/my/') !== -1) {
+    // 如果有权限的 则将vuex里的token 给请求头的请求头字段
+    options.header = {
+      Authorization: _store.default.state.m_user.token };
+
+  }
 };
 // 响应拦截器
 _requestMiniprogram.$http.afterRequest = function (option) {

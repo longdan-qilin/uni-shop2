@@ -44,23 +44,17 @@
   "appid": "wxa3f55d41d266a225",
   "projectname": "uni_shop2",
   "condition": {
-    "plugin": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
       "list": []
     },
     "game": {
       "list": []
     },
-    "gamePlugin": {
-      "list": []
-    },
     "miniprogram": {
-      "list": [
-        {
-          "name": "pages/cart/cart",
-          "pathName": "pages/cart/cart",
-          "scene": null
-        }
-      ]
+      "list": []
     }
   }
 }

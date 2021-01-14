@@ -801,7 +801,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1857,7 +1857,7 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ 104:
+/***/ 106:
 /*!*************************************************************************!*\
   !*** D:/项目/uni-app/uni_shop2/components/uni-swipe-action-item/mpwxs.js ***!
   \*************************************************************************/
@@ -3246,7 +3246,7 @@ var index = {
         this.commit('m_cart/saveToStorage');
       }
     },
-    // 更新本地的cart 的 商品数量
+    // 更新本地的cart的商品数量
     updateGoodsCount: function updateGoodsCount(state, goods) {
       // 查询商品的信息对象
       var findResult = state.cart.find(function (x) {return x.goods_id === goods.goods_id;});
@@ -3292,7 +3292,7 @@ var index = {
       // reduce() 的返回值就是已勾选的商品的总数量
       return state.cart.filter(function (x) {return x.goods_state;}).reduce(function (total, item) {return total += item.goods_count;}, 0);
     },
-    // 统计商品的总的价格 
+    // 统计选中商品的总的价格 
     checkedGoodsAmount: function checkedGoodsAmount(state) {
       return state.cart.filter(function (x) {return x.goods_state;}).
       reduce(function (total, item) {return total += item.goods_count * item.goods_price;}, 0).
@@ -3310,14 +3310,22 @@ var index = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 生命一个token常量
+var Token = 'token';var _default =
+
+{
   // 为当前模块开启命名空间
   namespaced: true,
 
   // 模块 state 数据
   state: function state() {return {
-      // 获取本地中存储的数据，初始化 address 对象
-      address: JSON.parse(uni.getStorageSync('address') || '{}') };},
+      // 获取本地中存储的数据，初始化 address, userinfo对象
+      address: JSON.parse(uni.getStorageSync('address') || '{}'),
+      userinfo: JSON.parse(uni.getStorageSync('userinfo') || '{}'),
+      // 本地存储token字符串 
+      token: uni.getStorageSync(Token) || '',
+      // 重定向的 object 页面的信息对象 对象，主要包含 { openType, from } 两个属性
+      redirectInfo: null };},
 
 
   // 模块 mutations 方法
@@ -3331,6 +3339,37 @@ var index = {
     // 将得到地址数据对象 存储到本地中 => 定义将 address 持久化存储到本地 mutations 方法
     saveAddressToStorage: function saveAddressToStorage(state) {
       uni.setStorageSync('address', JSON.stringify(state.address));
+    },
+
+    // 更新用户信息的方法 
+    updateUserInfo: function updateUserInfo(state, userinfo) {
+      // 将更新后的值 传入到vuex中
+      state.userinfo = userinfo;
+      // 用commit()这个方法调用 m_user中的saveUserInfoToStorage()这个方法
+      // 更新数据 本地持久化处理
+      this.commit('m_user/saveUserInfoToStorage');
+    },
+    // 将vuex中的用户信息userinfo 持久化存储到本地
+    saveUserInfoToStorage: function saveUserInfoToStorage(state) {
+      uni.setStorageSync('userinfo', JSON.stringify(state.userinfo));
+    },
+
+    // 更新vuex 中的用户Token
+    updateToken: function updateToken(state, token) {
+      state.token = token;
+      // 调用 m_user中的saveTokenToStorage()这个方法 持久化本地存储
+      this.commit('m_user/saveTokenToStorage');
+    },
+
+    // 将vuex中的token 持久化存储到本地
+    saveTokenToStorage: function saveTokenToStorage(state) {
+      uni.setStorageSync(Token, JSON.stringify(state.token));
+    },
+
+    // 更新vuex中的重定向对象
+    updateRedirect: function updateRedirect(state, info) {
+      state.redirectInfo = info;
+      console.log(state.redirectInfo);
     } },
 
 
@@ -8872,7 +8911,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8893,14 +8932,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8986,7 +9025,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"uni_shop2","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -10266,7 +10305,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 91:
+/***/ 93:
 /*!*************************************************************!*\
   !*** D:/项目/uni-app/uni_shop2/components/uni-icons/icons.js ***!
   \*************************************************************/
